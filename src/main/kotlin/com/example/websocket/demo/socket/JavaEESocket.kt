@@ -17,16 +17,20 @@ import javax.websocket.server.ServerEndpoint
  */
 @Component
 @ServerEndpoint("/websocket/{name}")
-class TestSocket {
+class JavaEESocket {
 
     lateinit var session: Session
 
     lateinit var name: String
 
     companion object {
-        private val SESSIONS: ConcurrentHashMap<String, TestSocket> = ConcurrentHashMap()
+        /**
+         * 模拟的 session 的存储。
+         * 实质 session 将存储与 redis 中
+         */
+        private val SESSIONS: ConcurrentHashMap<String, JavaEESocket> = ConcurrentHashMap()
 
-        private val log = LoggerFactory.getLogger(TestSocket::class.java)
+        private val log = LoggerFactory.getLogger(JavaEESocket::class.java)
     }
 
     /**
@@ -71,8 +75,8 @@ class TestSocket {
 
 
     fun sendTo(name: String, message: String) {
-        if (SESSIONS.containsKey(name)) {
-            SESSIONS[name]!!.session.basicRemote.sendText(message)
+        SESSIONS[name]?.apply {
+            this.session.basicRemote.sendText(message)
         }
     }
 

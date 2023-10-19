@@ -10,7 +10,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter
  * @author zzk
  */
 @Configuration
-class WebsocketConfig {
+class JavaEEWebsocketConfig {
 
     @Bean
     fun serverEndpointExporter(): ServerEndpointExporter {
